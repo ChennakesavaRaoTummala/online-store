@@ -37,6 +37,8 @@
       "zh-cn",
       "fr",
       "de"
-    ]
+    ],
+    "herokuDeployType": "git",
+    "herokuAppName": "sleepy-plateau-97984"
   }
 }
