@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core';
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ProductCategory } from 'app/shared/model/product-category.model';
 import { ProductCategoryService } from './product-category.service';
 import { ProductCategoryComponent } from './product-category.component';
@@ -18,9 +19,9 @@ export class ProductCategoryResolve implements Resolve<IProductCategory> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const id = route.params['id'] ? route.params['id'] : null;
         if (id) {
-            return this.service.find(id).map((productCategory: HttpResponse<ProductCategory>) => productCategory.body);
+            return this.service.find(id).pipe(map((productCategory: HttpResponse<ProductCategory>) => productCategory.body));
         }
-        return Observable.of(new ProductCategory());
+        return of(new ProductCategory());
     }
 }
 
