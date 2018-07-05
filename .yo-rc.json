@@ -39,6 +39,6 @@
       "de"
     ],
     "herokuDeployType": "git",
-    "herokuAppName": "sleepy-plateau-97984"
+    "herokuAppName": "store"
   }
 }
