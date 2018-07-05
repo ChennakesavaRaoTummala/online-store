@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core';
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Customer } from 'app/shared/model/customer.model';
 import { CustomerService } from './customer.service';
 import { CustomerComponent } from './customer.component';
@@ -18,9 +19,9 @@ export class CustomerResolve implements Resolve<ICustomer> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const id = route.params['id'] ? route.params['id'] : null;
         if (id) {
-            return this.service.find(id).map((customer: HttpResponse<Customer>) => customer.body);
+            return this.service.find(id).pipe(map((customer: HttpResponse<Customer>) => customer.body));
         }
-        return Observable.of(new Customer());
+        return of(new Customer());
     }
 }
 

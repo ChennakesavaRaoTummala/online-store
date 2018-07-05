@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core';
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Invoice } from 'app/shared/model/invoice.model';
 import { InvoiceService } from './invoice.service';
 import { InvoiceComponent } from './invoice.component';
@@ -18,9 +19,9 @@ export class InvoiceResolve implements Resolve<IInvoice> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const id = route.params['id'] ? route.params['id'] : null;
         if (id) {
-            return this.service.find(id).map((invoice: HttpResponse<Invoice>) => invoice.body);
+            return this.service.find(id).pipe(map((invoice: HttpResponse<Invoice>) => invoice.body));
         }
-        return Observable.of(new Invoice());
+        return of(new Invoice());
     }
 }
 
